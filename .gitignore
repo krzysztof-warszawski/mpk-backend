@@ -1,3 +1,5 @@
 /mpk-fullstack.iml
 /.idea/
 /app/config/env/
+/sql/data.sql
+/app/view/test.php
