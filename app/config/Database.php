@@ -86,4 +86,9 @@ class Database {
     public function lastInsertId() {
         return $this->dbh->lastInsertId();
     }
+
+    // Prints error if unsuccessful execution
+    public function error() {
+        return $this->stmt->errorInfo();
+    }
 }
