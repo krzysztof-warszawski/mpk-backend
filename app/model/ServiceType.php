@@ -3,7 +3,7 @@
 
 namespace model;
 
-require '../config/Database.php';
+//require '../config/Database.php';
 use config\Database;
 
 class ServiceType {
@@ -62,6 +62,6 @@ class ServiceType {
 
         $this->db->bind(':id', $this->id);
 
-        return $this->db->resultSet();
+        return $this->db->single();
     }
 }
