@@ -10,7 +10,7 @@ interface IProject {
 
     public function getProjectById();
 
-    public function getProjectByBuildingId();
+    public function getProjectsByBuildingId();
 
     public function create();
 

@@ -1,9 +1,8 @@
 <?php
 
 
-namespace model;
+namespace model\dao;
 
-//require '../config/Database.php';
 use config\Database;
 
 class ServiceType {

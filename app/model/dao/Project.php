@@ -1,8 +1,9 @@
 <?php
 
 
-namespace model;
+namespace model\dao;
 
+require 'IProject.php';
 use config\Database;
 
 class Project implements IProject {
@@ -156,7 +157,7 @@ class Project implements IProject {
     public function getAllProjects() {
         $this->db->query('SELECT * FROM project');
 
-        $this->db->resultSet();
+        return $this->db->resultSet();
     }
 
     public function getProjectById() {
@@ -164,15 +165,15 @@ class Project implements IProject {
                                 WHERE id = :id');
 
         $this->db->bind(':id', $this->id);
-        $this->db->single();
+        return $this->db->single();
     }
 
-    public function getProjectByBuildingId() {
+    public function getProjectsByBuildingId() {
         $this->db->query('SELECT * FROM project
                                 WHERE building_id = :id');
 
         $this->db->bind(':id', $this->buildingId);
-        $this->db->single();
+        return $this->db->resultSet();
     }
 
     public function create() {
