@@ -85,7 +85,7 @@ class Building {
     }
 
     public function getOnlyOfferBuildings() {
-        $this->db->query('SELECT  project.building_id, building.address, 
+        $this->db->query('SELECT project.building_id, building.address, 
                                         building.name, building.owner
                                  FROM project
                                  JOIN building
@@ -143,7 +143,7 @@ class Building {
 
     public function delete() {
         $this->db->query('DELETE FROM building 
-                                 WHERE buildin_id = :id');
+                                 WHERE building_id = :id');
 
         $this->db->bind(':id', $this->buildingId);
 
