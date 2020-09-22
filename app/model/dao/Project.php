@@ -5,6 +5,7 @@ namespace model\dao;
 
 require 'IProject.php';
 use config\Database;
+use model\IProject;
 
 class Project implements IProject {
     private Database $db;
@@ -155,7 +156,15 @@ class Project implements IProject {
 
 
     public function getAllProjects() {
-        $this->db->query('SELECT * FROM project');
+        $this->db->query('SELECT building.name as building_name, project.date, project.floor,
+                                    project.mpk, project.project_num, project.short_description, 
+                                    project.tenant, service_type.name as service
+                                 FROM project
+                                    JOIN building
+                                    ON project.building_id = building.building_id
+                                    JOIN service_type
+                                    ON project.service_type_id = service_type.id
+                                 ORDER BY building_name');
 
         return $this->db->resultSet();
     }
@@ -169,8 +178,14 @@ class Project implements IProject {
     }
 
     public function getProjectsByBuildingId() {
-        $this->db->query('SELECT * FROM project
-                                WHERE building_id = :id');
+        $this->db->query('SELECT project.date, project.floor, project.mpk, 
+                                    project.project_num, project.short_description, 
+                                    project.tenant, service_type.name as service
+                                 FROM project
+                                    JOIN service_type
+                                    ON project.service_type_id = service_type.id
+                                 WHERE building_id = :id
+                                    ORDER BY project.mpk');
 
         $this->db->bind(':id', $this->buildingId);
         return $this->db->resultSet();
@@ -178,9 +193,9 @@ class Project implements IProject {
 
     public function create() {
         $this->db->query('INSERT INTO project (date, floor, mpk, project_num,
-                     short_description, tenant, building_id, service_type_id)
-                     VALUES (:date, :floor, :mpk, :project_num, :short_description, 
-                             :tenant, :building_id, :service_type_id)');
+                                    short_description, tenant, building_id, service_type_id)
+                                 VALUES (:date, :floor, :mpk, :project_num, :short_description, 
+                                    :tenant, :building_id, :service_type_id)');
 
         $this->db->bind(':date', $this->date);
         $this->db->bind(':floor', $this->floor);
@@ -205,7 +220,7 @@ class Project implements IProject {
                                     tenant = :tenant,
                                     building_id = :building_id,
                                     service_type_id = :service_type_id
-                                 WHERE id= :id');
+                                 WHERE id = :id');
 
         $this->db->bind(':date', $this->date);
         $this->db->bind(':floor', $this->floor);
