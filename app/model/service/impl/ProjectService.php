@@ -3,18 +3,26 @@
 
 namespace model\service\impl;
 
-
+use model\dao\Project;
 use model\service\IProjectService;
 
 class ProjectService implements IProjectService {
 
+    private Project $project;
+
+
+    public function __construct() {
+        $this->project = new Project();
+    }
+
 
     public function getAllProjectsList() {
-        // TODO: Implement getAllProjectsList() method.
+        return $this->project->getAllProjects();
     }
 
     public function getProjectById($id) {
-        // TODO: Implement getProjectById() method.
+        $this->project->setId($id);
+        return $this->project->getProjectById();
     }
 
     public function getProjectsByBuildingId($id) {
