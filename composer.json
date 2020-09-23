@@ -1,0 +1,17 @@
+{
+    "name": "kavit/mpk-fullstack",
+    "type": "project",
+    "autoload": {
+        "classmap": [
+            "app/"
+        ]
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9"
+    },
+    "require": {
+      "ext-pdo": "*",
+      "ext-json": "*",
+        "vlucas/phpdotenv": "^5.2"
+    }
+}
