@@ -3,3 +3,7 @@
 /app/config/env/
 /sql/data.sql
 /app/view/test.php
+
+/vendor/
+/.phpunit.result.cache
+/app/config/.env

@@ -2,25 +2,27 @@
 
 namespace config;
 
-require 'env/config.php';
+//require 'init.php';
 
 use PDO;
 use PDOException;
 use PDOStatement;
 
 class Database {
-    private string $host = DB_HOST;
-    private string $user = DB_USER;
-    private string $pass = DB_PASS;
-    private string $dbname = DB_NAME;
 
     private PDO $dbh;
     private string $error;
     private PDOStatement $stmt;
 
     public function __construct() {
+
+        $host = $_ENV['DB_HOST'];
+        $user = $_ENV['DB_USER'];
+        $pass = $_ENV['DB_PASS'];
+        $dbname = $_ENV['DB_NAME'];
+
         // Set DSN
-        $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->dbname;
+        $dsn = 'mysql:host=' . $host . ';dbname=' . $dbname;
         $options = array(
             PDO::ATTR_PERSISTENT => true,
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
@@ -28,7 +30,7 @@ class Database {
 
         // Create a new PDO instance
         try {
-            $this->dbh = new PDO ($dsn, $this->user, $this->pass, $options);
+            $this->dbh = new PDO ($dsn, $user, $pass, $options);
         }        // Catch any errors
         catch (PDOException $e) {
             $this->error = $e->getMessage();
