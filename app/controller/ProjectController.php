@@ -35,7 +35,7 @@ class ProjectController extends CRUDController {
                 // TODO
                 break;
             case 'DELETE':
-                // TODO
+                $response = $this->deleteRequest();
                 break;
             default:
                 $response = $this->notFoundResponse();
@@ -74,7 +74,13 @@ class ProjectController extends CRUDController {
     }
 
     protected function deleteRequest() {
-        // TODO: Implement deleteRequest() method.
+        $result = $this->service->deleteProject($this->id);
+        if (!$result) {
+            return $this->notFoundResponse();
+        }
+        $response['status_code_header'] = 'HTTP/1.1 200 OK';
+        $response['body'] = null;
+        return $response;
     }
 
     protected function validateInput() {
