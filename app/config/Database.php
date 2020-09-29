@@ -81,6 +81,7 @@ class Database {
 
     // Get record row count
     public function rowCount() {
+        $this->stmt->execute();
         return $this->stmt->rowCount();
     }
 
