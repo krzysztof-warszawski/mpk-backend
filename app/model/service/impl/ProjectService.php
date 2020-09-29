@@ -38,6 +38,7 @@ class ProjectService implements IProjectService {
     }
 
     public function deleteProject($id) {
-        // TODO: Implement deleteProject() method.
+        $this->project->setId($id);
+        return $this->project->delete();
     }
 }
