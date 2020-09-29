@@ -3,9 +3,7 @@
 
 namespace model\dao;
 
-require 'IProject.php';
 use config\Database;
-use model\IProject;
 
 class Project implements IProject {
     private Database $db;
@@ -156,7 +154,7 @@ class Project implements IProject {
 
 
     public function getAllProjects() {
-        $this->db->query('SELECT building.name as building_name, project.date, project.floor,
+        $this->db->query('SELECT project.id, building.name as building_name, project.date, project.floor,
                                     project.mpk, project.project_num, project.short_description, 
                                     project.tenant, service_type.name as service
                                  FROM project
@@ -232,7 +230,7 @@ class Project implements IProject {
         $this->db->bind(':service_type_id', $this->serviceTypeId);
         $this->db->bind(':id', $this->id);
 
-        return $this->db->execute();
+        return $this->db->rowCount();
     }
 
     public function delete() {
@@ -241,6 +239,6 @@ class Project implements IProject {
 
         $this->db->bind(':id', $this->id);
 
-        return $this->db->execute();
+        return $this->db->rowCount();
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace model;
+namespace model\dao;
 
 
 interface IProject {
