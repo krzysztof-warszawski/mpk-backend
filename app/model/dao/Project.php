@@ -49,7 +49,7 @@ class Project implements IProject {
     /**
      * @param string $date
      */
-    public function setDate(string $date = null): void {
+    public function setDate(?string $date): void {
         $this->date = $date;
     }
 
@@ -63,7 +63,7 @@ class Project implements IProject {
     /**
      * @param string $floor
      */
-    public function setFloor(string $floor = null): void {
+    public function setFloor(?string $floor): void {
         $this->floor = $floor;
     }
 
@@ -105,7 +105,7 @@ class Project implements IProject {
     /**
      * @param string $shortDescription
      */
-    public function setShortDescription(string $shortDescription = null): void {
+    public function setShortDescription(?string $shortDescription): void {
         $this->shortDescription = $shortDescription;
     }
 
@@ -119,7 +119,7 @@ class Project implements IProject {
     /**
      * @param string $tenant
      */
-    public function setTenant(string $tenant = null): void {
+    public function setTenant(?string $tenant): void {
         $this->tenant = $tenant;
     }
 
