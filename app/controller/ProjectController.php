@@ -13,7 +13,7 @@ class ProjectController extends CRUDController {
      * @param string $requestMethod
      * @param int $id
      */
-    public function __construct(string $requestMethod, int $id = null) {
+    public function __construct(string $requestMethod, ?int $id) {
         parent::__construct($requestMethod, $id);
         $this->service = new ProjectService();
     }
@@ -32,7 +32,11 @@ class ProjectController extends CRUDController {
                 $response = $this->createRequest();
                 break;
             case 'PUT':
-                // TODO
+                if ($this->id !== null) {
+                    $response = $this->updateRequest();
+                } else {
+                    $response = $this->notFoundResponse();
+                }
                 break;
             case 'DELETE':
                 $response = $this->deleteRequest();
@@ -77,7 +81,18 @@ class ProjectController extends CRUDController {
     }
 
     protected function updateRequest() {
-        // TODO: Implement updateRequest() method.
+        $input = (array) json_decode(file_get_contents('php://input'), TRUE);
+        if (!$this->validateInput($input)) {
+            return $this->unprocessableEntityResponse();
+        }
+        $result = $this->service->getProjectById($this->id);
+        if (!$result) {
+            return $this->notFoundResponse();
+        }
+        $this->service->updateProject($this->id, $input);
+        $response['status_code_header'] = 'HTTP/1.1 201 OK';
+        $response['body'] = null;
+        return $response;
     }
 
     protected function deleteRequest() {
