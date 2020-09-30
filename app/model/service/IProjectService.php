@@ -12,9 +12,9 @@ interface IProjectService {
 
     public function getProjectsByBuildingId($id);
 
-    public function createProject();
+    public function createProject(array $input);
 
-    public function updateProject($id);
+    public function updateProject($id, array $input);
 
     public function deleteProject($id);
 }

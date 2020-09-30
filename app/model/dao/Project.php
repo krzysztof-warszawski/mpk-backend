@@ -9,12 +9,12 @@ class Project implements IProject {
     private Database $db;
 
     private int $id;
-    private string $date;
-    private string $floor;
+    private ?string $date;
+    private ?string $floor;
     private string $mpk;
     private int $projectNum;
-    private string $shortDescription;
-    private string $tenant;
+    private ?string $shortDescription;
+    private ?string $tenant;
     private int $buildingId;
     private int $serviceTypeId;
 
@@ -24,7 +24,6 @@ class Project implements IProject {
     public function __construct() {
         $this->db = new Database();
     }
-
 
     /**
      * @return int
@@ -50,7 +49,7 @@ class Project implements IProject {
     /**
      * @param string $date
      */
-    public function setDate(string $date): void {
+    public function setDate(string $date = null): void {
         $this->date = $date;
     }
 
@@ -64,7 +63,7 @@ class Project implements IProject {
     /**
      * @param string $floor
      */
-    public function setFloor(string $floor): void {
+    public function setFloor(string $floor = null): void {
         $this->floor = $floor;
     }
 
@@ -106,7 +105,7 @@ class Project implements IProject {
     /**
      * @param string $shortDescription
      */
-    public function setShortDescription(string $shortDescription): void {
+    public function setShortDescription(string $shortDescription = null): void {
         $this->shortDescription = $shortDescription;
     }
 
@@ -120,7 +119,7 @@ class Project implements IProject {
     /**
      * @param string $tenant
      */
-    public function setTenant(string $tenant): void {
+    public function setTenant(string $tenant = null): void {
         $this->tenant = $tenant;
     }
 
@@ -204,7 +203,7 @@ class Project implements IProject {
         $this->db->bind(':building_id', $this->buildingId);
         $this->db->bind(':service_type_id', $this->serviceTypeId);
 
-        return $this->db->execute();
+        return $this->db->rowCount();
     }
 
     public function update() {
