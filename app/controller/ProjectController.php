@@ -29,7 +29,7 @@ class ProjectController extends CRUDController {
                 }
                 break;
             case 'POST':
-                // TODO
+                $response = $this->createRequest();
                 break;
             case 'PUT':
                 // TODO
@@ -66,7 +66,14 @@ class ProjectController extends CRUDController {
     }
 
     protected function createRequest() {
-        // TODO: Implement createRequest() method.
+        $input = (array) json_decode(file_get_contents('php://input'), TRUE);
+        if (!$this->validateInput($input)) {
+            return $this->unprocessableEntityResponse();
+        }
+        $this->service->createProject($input);
+        $response['status_code_header'] = 'HTTP/1.1 201 OK';
+        $response['body'] = null;
+        return $response;
     }
 
     protected function updateRequest() {
@@ -83,7 +90,19 @@ class ProjectController extends CRUDController {
         return $response;
     }
 
-    protected function validateInput() {
-        // TODO: Implement validateInput() method.
+    protected function validateInput(array $input) {
+        if (!is_numeric($input['mpk'])) {
+            return false;
+        }
+        if (!is_numeric($input['projectNum'])) {
+            return false;
+        }
+        if (!is_numeric($input['buildingId'])) {
+            return false;
+        }
+        if (!is_numeric($input['serviceTypeId'])) {
+            return false;
+        }
+        return true;
     }
 }

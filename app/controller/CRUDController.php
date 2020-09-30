@@ -32,5 +32,5 @@ abstract class CRUDController {
 
     abstract protected function deleteRequest();
 
-    abstract protected function validateInput();
+    abstract protected function validateInput(array $input);
 }
