@@ -26,7 +26,8 @@ class ProjectService implements IProjectService {
     }
 
     public function getProjectsByBuildingId($id) {
-        // TODO: Implement getProjectsByBuildingId() method.
+        $this->project->setBuildingId($id);
+        return $this->project->getProjectsByBuildingId();
     }
 
     public function createProject(array $input) {
