@@ -8,18 +8,16 @@ use model\service\impl\BuildingService;
 class BuildingController extends CRUDController {
     use InvalidOrNoDataResponse;
 
-    private bool $offer;
 
     /**
      * BuildingController constructor.
      * @param string $requestMethod
      * @param int|null $id
-     * @param bool $offer
+     * @param bool $isOfferBuildings
      */
-    public function __construct(string $requestMethod, ?int $id, bool $offer) {
-        parent::__construct($requestMethod, $id);
+    public function __construct(string $requestMethod, ?int $id, bool $isOfferBuildings) {
+        parent::__construct($requestMethod, $id, $isOfferBuildings);
         $this->service = new BuildingService();
-        $this->offer = $offer;
     }
 
     public function processRequest() {
@@ -51,7 +49,7 @@ class BuildingController extends CRUDController {
     }
 
     protected function findAllRequest() {
-        if ($this->offer) {
+        if ($this->isSpecificData) {
             $result = $this->service->getOfferBuildingsList();
         } else {
             $result = $this->service->getAllBuildingsList();
@@ -62,7 +60,13 @@ class BuildingController extends CRUDController {
     }
 
     protected function findOneRequest() {
-        // TODO: Implement findOneRequest() method.
+        $result = $this->service->getBuildingById($this->id);
+        if (!$result) {
+            return $this->notFoundResponse();
+        }
+        $response['status_code_header'] = 'HTTP/1.1 200 OK';
+        $response['body'] = json_encode($result);
+        return $response;
     }
 
     protected function createRequest() {
