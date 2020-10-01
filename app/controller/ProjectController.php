@@ -12,9 +12,10 @@ class ProjectController extends CRUDController {
      * ProjectController constructor.
      * @param string $requestMethod
      * @param int $id
+     * @param bool $isProjectsOfBuilding
      */
-    public function __construct(string $requestMethod, ?int $id) {
-        parent::__construct($requestMethod, $id);
+    public function __construct(string $requestMethod, ?int $id, bool $isProjectsOfBuilding) {
+        parent::__construct($requestMethod, $id, $isProjectsOfBuilding);
         $this->service = new ProjectService();
     }
 
@@ -22,7 +23,7 @@ class ProjectController extends CRUDController {
     public function processRequest() {
         switch ($this->requestMethod) {
             case 'GET':
-                if ($this->id !== null) {
+                if ($this->id && !$this->isSpecificData) {
                     $response = $this->findOneRequest();
                 } else {
                     $response = $this->findAllRequest();
@@ -53,7 +54,11 @@ class ProjectController extends CRUDController {
 
 
     protected function findAllRequest() {
-        $result = $this->service->getAllProjectsList();
+        if ($this->isSpecificData) {
+            $result = $this->service->getProjectsByBuildingId($this->id);
+        } else {
+            $result = $this->service->getAllProjectsList();
+        }
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = json_encode($result);
         return $response;
