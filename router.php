@@ -14,8 +14,15 @@ $uri = explode( '/', $uri );
 
 $requestMethod = $_SERVER["REQUEST_METHOD"];
 
+// read the URI
+if (isset($uri[5]) && $uri[5] === 'projects') {
+    $isProjectsOfBuilding = true;
+    $uri[3] = 'projects';
+} else {
+    $isProjectsOfBuilding = false;
+    $isOfferBuildings = isset($uri[4]) && $uri[4] === 'offer';
+}
 $id = isset($uri[4]) && ctype_digit($uri[4]) ? (int) $uri[4] : null;
-
 
 switch ($uri[3]) {
     case 'projects':
