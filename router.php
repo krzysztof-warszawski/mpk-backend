@@ -1,6 +1,8 @@
 <?php
 
 require 'app/config/init.php';
+
+use controller\BuildingController;
 use controller\ProjectController;
 
 header('Access-Control-Allow-Origin: *');
@@ -28,11 +30,12 @@ $id = isset($uri[4]) && ctype_digit($uri[4]) ? (int) $uri[4] : null;
 
 switch ($uri[3]) {
     case 'projects':
-        $projectController = new ProjectController($requestMethod, $id);
+        $projectController = new ProjectController($requestMethod, $id, $isProjectsOfBuilding);
         $projectController->processRequest();
         break;
     case 'buildings':
-        // todo: figure $uri[5] -> projects of the building (GET buildings/{id}/projects)
+        $buildingController = new BuildingController($requestMethod, $id, $isOfferBuildings);
+        $buildingController->processRequest();
         break;
     case 'mpk':
         // todo
