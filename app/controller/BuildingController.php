@@ -30,13 +30,21 @@ class BuildingController extends CRUDController {
                 }
                 break;
             case 'POST':
-                // TODO: Implement
+                $response = $this->createRequest();
                 break;
             case 'PUT':
-                // TODO: Implement
+                if ($this->id !== null) {
+                    $response = $this->updateRequest();
+                } else {
+                    $response = $this->notFoundResponse();
+                }
                 break;
             case 'DELETE':
-                // TODO: Implement and DELETE OFFER Project that belongs to this building
+                if ($this->id !== null) {
+                    $response = $this->deleteRequest();
+                } else {
+                    $response = $this->notFoundResponse();
+                }
                 break;
             default:
                 $response = $this->notFoundResponse();
@@ -70,18 +78,52 @@ class BuildingController extends CRUDController {
     }
 
     protected function createRequest() {
-        // TODO: Implement createRequest() method.
+        $input = (array) json_decode(file_get_contents('php://input'),TRUE);
+        if (!$this->validateInput($input)) {
+            return $this->unprocessableEntityResponse();
+        }
+        $building = $this->service->createBuildingAndReturn($input);
+        // TODO -> continue with MPK Service
+        $response['status_code_header'] = 'HTTP/1.1 201 Created';
+        $response['body'] = null;
+        return $response;
     }
 
     protected function updateRequest() {
-        // TODO: Implement updateRequest() method.
+        $input = (array) json_decode(file_get_contents('php://input'),TRUE);
+        if (!$this->validateInput($input)) {
+            return $this->unprocessableEntityResponse();
+        }
+        $result = $this->service->getBuildingById($this->id);
+        if (!$result) {
+            return $this->notFoundResponse();
+        }
+        $this->service->updateBuilding($this->id, $input);
+        $response['status_code_header'] = 'HTTP/1.1 200 OK';
+        $response['body'] = null;
+        return $response;
     }
 
     protected function deleteRequest() {
-        // TODO: Implement deleteRequest() method.
+        $result = $this->service->deleteBuilding($this->id);
+        if (!$result) {
+            return $this->notFoundResponse();
+        }
+        $response['status_code_header'] = 'HTTP/1.1 200 OK';
+        $response['body'] = null;
+        return $response;
     }
 
     protected function validateInput(array $input) {
-        // TODO: Implement validateInput() method.
+        if (!isset($input['address'])) {
+            return false;
+        }
+        if (!isset($input['name'])) {
+            return false;
+        }
+        if (!isset($input['owner'])) {
+            return false;
+        }
+        return true;
     }
 }
