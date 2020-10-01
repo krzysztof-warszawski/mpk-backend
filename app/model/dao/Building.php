@@ -81,12 +81,12 @@ class Building {
         $this->db->query('SELECT * FROM building
                                  ORDER BY name');
 
-        $this->db->resultSet();
+        return $this->db->resultSet();
     }
 
     public function getOnlyOfferBuildings() {
-        $this->db->query('SELECT project.building_id, building.address, 
-                                        building.name, building.owner
+        $this->db->query('SELECT project.building_id, building.name, 
+                                        building.owner, building.address
                                  FROM project
                                  JOIN building
                                  ON project.building_id = building.building_id
@@ -94,7 +94,7 @@ class Building {
                                  HAVING COUNT(project.project_num) < 2
                                  ORDER BY building.name');
 
-        $this->db->resultSet();
+        return $this->db->resultSet();
     }
 
     public function getBuildingById() {
@@ -102,15 +102,6 @@ class Building {
                                  WHERE building_id= :id');
 
         $this->db->bind(':id', $this->buildingId);
-
-        return $this->db->single();
-    }
-
-    public function getBuildingByName() {
-        $this->db->query('SELECT * FROM building
-                                 WHERE name= :name');
-
-        $this->db->bind(':name', $this->name);
 
         return $this->db->single();
     }
@@ -138,7 +129,7 @@ class Building {
         $this->db->bind(':owner', $this->owner);
         $this->db->bind(':id', $this->buildingId);
 
-        return $this->db->execute();
+        return $this->db->rowCount();
     }
 
     public function delete() {
@@ -147,6 +138,6 @@ class Building {
 
         $this->db->bind(':id', $this->buildingId);
 
-        return $this->db->execute();
+        return $this->db->rowCount();
     }
 }
