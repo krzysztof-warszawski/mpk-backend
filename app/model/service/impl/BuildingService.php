@@ -4,14 +4,25 @@
 namespace model\service\impl;
 
 
-class BuildingService implements \model\service\IBuildingService {
+use model\dao\Building;
+use model\service\IBuildingService;
+
+class BuildingService implements IBuildingService {
+
+    private Building $building;
+
+
+    public function __construct() {
+        $this->building = new Building();
+    }
+
 
     public function getAllBuildingsList() {
-        // TODO: Implement getAllBuildingsList() method.
+        return $this->building->getAllBuildings();
     }
 
     public function getOfferBuildingsList() {
-        // TODO: Implement getOfferBuildingsList() method.
+        return $this->building->getOnlyOfferBuildings();
     }
 
     public function getBuildingById($id) {
