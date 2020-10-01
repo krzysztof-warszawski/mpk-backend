@@ -40,7 +40,11 @@ class ProjectController extends CRUDController {
                 }
                 break;
             case 'DELETE':
-                $response = $this->deleteRequest();
+                if ($this->id !== null) {
+                    $response = $this->deleteRequest();
+                } else {
+                    $response = $this->notFoundResponse();
+                }
                 break;
             default:
                 $response = $this->notFoundResponse();
@@ -80,7 +84,7 @@ class ProjectController extends CRUDController {
             return $this->unprocessableEntityResponse();
         }
         $this->service->createProject($input);
-        $response['status_code_header'] = 'HTTP/1.1 201 OK';
+        $response['status_code_header'] = 'HTTP/1.1 201 Created';
         $response['body'] = null;
         return $response;
     }
@@ -95,7 +99,7 @@ class ProjectController extends CRUDController {
             return $this->notFoundResponse();
         }
         $this->service->updateProject($this->id, $input);
-        $response['status_code_header'] = 'HTTP/1.1 201 OK';
+        $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = null;
         return $response;
     }
