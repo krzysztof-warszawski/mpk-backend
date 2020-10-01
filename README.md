@@ -1,3 +1,3 @@
 # mpk-fullstack
 
-[FRONTEND](https://github.com/krzysztof-warszawski/mpk-frontend)
+[FRONTEND -> click here](https://github.com/krzysztof-warszawski/mpk-frontend) 
