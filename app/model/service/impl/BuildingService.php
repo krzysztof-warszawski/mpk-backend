@@ -26,7 +26,8 @@ class BuildingService implements IBuildingService {
     }
 
     public function getBuildingById($id) {
-        // TODO: Implement getBuildingById() method.
+        $this->building->setBuildingId($id);
+        return $this->building->getBuildingById();
     }
 
     public function getBuildingByName($name) {
