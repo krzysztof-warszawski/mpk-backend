@@ -30,19 +30,33 @@ class BuildingService implements IBuildingService {
         return $this->building->getBuildingById();
     }
 
+    /**
+     * @param $name
+     * @deprecated
+     */
     public function getBuildingByName($name) {
         // TODO: Implement getBuildingByName() method.
     }
 
     public function createBuildingAndReturn(array $input) {
-        // TODO: Implement createBuildingAndReturn() method.
+        $this->building->setAddress($input['address']);
+        $this->building->setName($input['name']);
+        $this->building->setOwner($input['owner']);
+
+        return $this->building->createNewBuildingAndReturn();
     }
 
     public function updateBuilding($id, array $input) {
-        // TODO: Implement updateBuilding() method.
+        $this->building->setBuildingId($id);
+        $this->building->setAddress($input['address']);
+        $this->building->setName($input['name']);
+        $this->building->setOwner($input['owner']);
+
+        return $this->building->update();
     }
 
     public function deleteBuilding($id) {
-        // TODO: Implement deleteBuilding() method.
+        $this->building->setBuildingId($id);
+        return $this->building->delete();
     }
 }
