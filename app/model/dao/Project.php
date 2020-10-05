@@ -251,4 +251,14 @@ class Project implements IProject {
 
         return $this->db->rowCount();
     }
+
+    public function deleteByBuildingId(int $id) {
+        $this->db->query('DELETE FROM project 
+                                    WHERE building_id = :id');
+
+        $this->db->bind(':id', $id);
+
+        return $this->db->rowCount();
+    }
+
 }

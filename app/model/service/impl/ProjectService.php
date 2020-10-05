@@ -14,6 +14,7 @@ class ProjectService implements IProjectService {
 
     public function __construct() {
         $this->project = new Project();
+        $this->mpkService = new MpkService();
     }
 
 
@@ -63,7 +64,11 @@ class ProjectService implements IProjectService {
         return $this->project->delete();
     }
 
-    public function initProject(int $buildingId) {
+    public function deleteProjectByBuildingId(int $id) {
+        return $this->project->deleteByBuildingId($id);
+    }
+
+    public function initialProject(int $buildingId) {
         $mpk = $this->mpkService->createMpk($buildingId);
         $input = array(
             "date" => date("Ym"),
@@ -73,7 +78,7 @@ class ProjectService implements IProjectService {
             "buildingId" => $buildingId,
             "serviceTypeId" => 0
         );
-        $this->createProject($input);
+        return $this->createProject($input);
     }
 
     public function addProject(array $input) {
@@ -82,14 +87,15 @@ class ProjectService implements IProjectService {
 
         $mpk = $this->mpkService->addNewMpk($input['buildingId'], $projectNum, $input['serviceTypeId']);
         $input['mpk'] = $mpk;
+        $input['projectNum'] = $projectNum;
 
-        $this->createProject($input);
+        return $this->createProject($input);
     }
 
     public function modifyProject(int $id, array $input) {
         $mpk = $this->mpkService->addNewMpk($input['buildingId'], $input['projectNum'], $input['serviceTypeId']);
         $input['mpk'] = $mpk;
 
-        $this->updateProject($id, $input);
+        return $this->updateProject($id, $input);
     }
 }

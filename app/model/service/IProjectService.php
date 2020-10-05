@@ -18,7 +18,9 @@ interface IProjectService {
 
     public function deleteProject(int $id);
 
-    public function initProject(int $buildingId);
+    public function deleteProjectByBuildingId(int $id);
+
+    public function initialProject(int $buildingId);
 
     public function addProject(array $input);
 

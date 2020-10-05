@@ -17,4 +17,6 @@ interface IProject {
     public function update();
 
     public function delete();
+
+    public function deleteByBuildingId(int $buildingId);
 }
