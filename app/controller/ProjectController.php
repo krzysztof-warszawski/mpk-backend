@@ -83,7 +83,7 @@ class ProjectController extends CRUDController {
         if (!$this->validateInput($input)) {
             return $this->unprocessableEntityResponse();
         }
-        $this->service->createProject($input);
+        $this->service->addProject($input);
         $response['status_code_header'] = 'HTTP/1.1 201 Created';
         $response['body'] = null;
         return $response;
@@ -98,7 +98,7 @@ class ProjectController extends CRUDController {
         if (!$result) {
             return $this->notFoundResponse();
         }
-        $this->service->updateProject($this->id, $input);
+        $this->service->modifyProject($this->id, $input);
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = null;
         return $response;
@@ -115,12 +115,12 @@ class ProjectController extends CRUDController {
     }
 
     protected function validateInput(array $input) {
-        if (!is_numeric($input['mpk'])) {
-            return false;
-        }
-        if (!is_numeric($input['projectNum'])) {
-            return false;
-        }
+//        if (!is_numeric($input['mpk'])) {
+//            return false;
+//        }
+//        if (!is_numeric($input['projectNum'])) {
+//            return false;
+//        }
         if (!is_numeric($input['buildingId'])) {
             return false;
         }

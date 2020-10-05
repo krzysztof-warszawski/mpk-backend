@@ -188,14 +188,14 @@ class Project implements IProject {
         return $this->db->resultSet();
     }
 
-    public function getTopProjectForBuildingId() {
+    public function getTopProjectForBuildingId(string $buildingId) {
         $this->db->query('SELECT project_num
                                     FROM project
                                  WHERE building_id = :id
                                     ORDER BY project.id DESC
                                  LIMIT 1;');
 
-        $this->db->bind(':id', $this->buildingId);
+        $this->db->bind(':id', $buildingId);
         return $this->db->single();
     }
 

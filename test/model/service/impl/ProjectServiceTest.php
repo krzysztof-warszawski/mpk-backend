@@ -45,4 +45,10 @@ class ProjectServiceTest extends TestCase {
     public function testDeleteProject() {
 
     }
+
+    public function testAddProject() {
+        $proNum = self::$projectService->addProject(['buildingId' => 11]);
+
+        self::assertEquals(3, $proNum);
+    }
 }

@@ -8,15 +8,19 @@ interface IProjectService {
 
     public function getAllProjectsList();
 
-    public function getProjectById($id);
+    public function getProjectById(int $id);
 
-    public function getProjectsByBuildingId($id);
+    public function getProjectsByBuildingId(int $id);
 
     public function createProject(array $input);
 
-    public function updateProject($id, array $input);
+    public function updateProject(int $id, array $input);
 
-    public function deleteProject($id);
+    public function deleteProject(int $id);
 
     public function initProject(int $buildingId);
+
+    public function addProject(array $input);
+
+    public function modifyProject(int $id, array $input);
 }

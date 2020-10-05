@@ -21,12 +21,12 @@ class ProjectService implements IProjectService {
         return $this->project->getAllProjects();
     }
 
-    public function getProjectById($id) {
+    public function getProjectById(int $id) {
         $this->project->setId($id);
         return $this->project->getProjectById();
     }
 
-    public function getProjectsByBuildingId($id) {
+    public function getProjectsByBuildingId(int $id) {
         $this->project->setBuildingId($id);
         return $this->project->getProjectsByBuildingId();
     }
@@ -44,7 +44,7 @@ class ProjectService implements IProjectService {
         return $this->project->create();
     }
 
-    public function updateProject($id, array $input) {
+    public function updateProject(int $id, array $input) {
         $this->project->setId($id);
         $this->project->setDate($input['date'] ?? null);
         $this->project->setFloor($input['floor'] ?? null);
@@ -58,7 +58,7 @@ class ProjectService implements IProjectService {
         return $this->project->update();
     }
 
-    public function deleteProject($id) {
+    public function deleteProject(int $id) {
         $this->project->setId($id);
         return $this->project->delete();
     }
@@ -66,7 +66,7 @@ class ProjectService implements IProjectService {
     public function initProject(int $buildingId) {
         $mpk = $this->mpkService->createMpk($buildingId);
         $input = array(
-            "date" => new \DateTime(),
+            "date" => date("Ym"),
             "mpk" => $mpk,
             "projectNum" => 0,
             "shortDescription" => "OFERTOWANIE I MARKETING",
@@ -74,5 +74,22 @@ class ProjectService implements IProjectService {
             "serviceTypeId" => 0
         );
         $this->createProject($input);
+    }
+
+    public function addProject(array $input) {
+        $topProjectNum = $this->project->getTopProjectForBuildingId($input['buildingId']);
+        $projectNum = $topProjectNum->project_num + 1;
+
+        $mpk = $this->mpkService->addNewMpk($input['buildingId'], $projectNum, $input['serviceTypeId']);
+        $input['mpk'] = $mpk;
+
+        $this->createProject($input);
+    }
+
+    public function modifyProject(int $id, array $input) {
+        $mpk = $this->mpkService->addNewMpk($input['buildingId'], $input['projectNum'], $input['serviceTypeId']);
+        $input['mpk'] = $mpk;
+
+        $this->updateProject($id, $input);
     }
 }
