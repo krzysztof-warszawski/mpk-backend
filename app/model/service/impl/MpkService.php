@@ -17,13 +17,22 @@ class MpkService implements IMpkService {
         return $mpk;
     }
 
-    public function updateMpk(string $mpk) {
-        // TODO: Implement updateMpk() method.
+    public function updateMpk(string $mpk, string $serviceType) {
+        return substr_replace($mpk, $serviceType, -1);
     }
 
-    public function addNewMpk(int $buildingId, string $mpk, int $serviceType) {
-        // TODO: Implement addNewMpk() method.
-    }
+    public function addNewMpk(string $buildingId, string $projectNum, string $serviceType) {
+        if (strlen($buildingId) < 3) {
+            $buildingId = '0'. $buildingId;
+        }
+        if (strlen($projectNum) == 1) {
+            $projectNum = '00'. $projectNum;
+        } else if (strlen($projectNum) == 2) {
+            $projectNum = '0'. $projectNum;
+        }
+        $mpk = $buildingId . $projectNum . $serviceType;
 
+        return $mpk;
+    }
 
 }
