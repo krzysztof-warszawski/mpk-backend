@@ -115,12 +115,6 @@ class ProjectController extends CRUDController {
     }
 
     protected function validateInput(array $input) {
-//        if (!is_numeric($input['mpk'])) {
-//            return false;
-//        }
-//        if (!is_numeric($input['projectNum'])) {
-//            return false;
-//        }
         if (!is_numeric($input['buildingId'])) {
             return false;
         }

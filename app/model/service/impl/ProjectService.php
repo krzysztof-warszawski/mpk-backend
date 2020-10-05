@@ -89,7 +89,13 @@ class ProjectService implements IProjectService {
         $input['mpk'] = $mpk;
         $input['projectNum'] = $projectNum;
 
-        return $this->createProject($input);
+        $result = $this->createProject($input);
+
+        if ($input['serviceTypeId'] == 5) {
+            $this->addGuaranteeProject($input);
+        }
+
+        return $result;
     }
 
     public function modifyProject(int $id, array $input) {
@@ -97,5 +103,16 @@ class ProjectService implements IProjectService {
         $input['mpk'] = $mpk;
 
         return $this->updateProject($id, $input);
+    }
+
+    public function addGuaranteeProject(array $input) {
+        $mpk = $this->mpkService->addNewMpk($input['buildingId'], $input['projectNum'], 6);
+        $input['mpk'] = $mpk;
+        $input['floor'] = null;
+        $input['serviceTypeId'] = 6;
+        $input['shortDescription'] = "Gwarancja dla ". $input['date'] . "_". $input['shortDescription'];
+        $input['date'] = null;
+
+        $this->createProject($input);
     }
 }

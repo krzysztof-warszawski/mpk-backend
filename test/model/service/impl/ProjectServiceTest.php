@@ -57,8 +57,8 @@ class ProjectServiceTest extends TestCase {
         $input = array(
             "date" => date("Ym"),
             "shortDescription" => "test descr",
-            "buildingId" => 78,
-            "serviceTypeId" => 1
+            "buildingId" => 60,
+            "serviceTypeId" => 5
         );
 
         $proNum = self::$projectService->addProject($input);

@@ -25,4 +25,6 @@ interface IProjectService {
     public function addProject(array $input);
 
     public function modifyProject(int $id, array $input);
+
+    public function addGuaranteeProject(array $input);
 }
