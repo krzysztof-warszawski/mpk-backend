@@ -46,9 +46,39 @@ class ProjectServiceTest extends TestCase {
 
     }
 
-    public function testAddProject() {
-        $proNum = self::$projectService->addProject(['buildingId' => 11]);
+    public function testInitProject() {
+        self::$projectService->initialProject(78);
 
-        self::assertEquals(3, $proNum);
+        self::assertNotNull(self::$projectService->getProjectsByBuildingId(78));
     }
+
+    public function testAddProject() {
+
+        $input = array(
+            "date" => date("Ym"),
+            "shortDescription" => "test descr",
+            "buildingId" => 78,
+            "serviceTypeId" => 1
+        );
+
+        $proNum = self::$projectService->addProject($input);
+
+        self::assertNotNull($proNum);
+    }
+
+    public function testModifyProject() {
+
+        $input = array(
+            "date" => date("Ym"),
+            "shortDescription" => "descr",
+            "projectNum" => 0,
+            "buildingId" => 61,
+            "serviceTypeId" => 4
+        );
+
+        $proNum = self::$projectService->modifyProject(203, $input);
+
+        self::assertNotNull($proNum);
+    }
+
 }
