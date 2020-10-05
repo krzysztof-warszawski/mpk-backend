@@ -15,6 +15,7 @@ class BuildingService implements IBuildingService {
 
     public function __construct() {
         $this->building = new Building();
+        $this->projectService = new ProjectService();
     }
 
 
@@ -31,21 +32,13 @@ class BuildingService implements IBuildingService {
         return $this->building->getBuildingById();
     }
 
-    /**
-     * @param $name
-     * @deprecated
-     */
-    public function getBuildingByName($name) {
-        // TODO: Implement getBuildingByName() method.
-    }
-
     public function createBuildingAndInitProject(array $input) {
         $this->building->setAddress($input['address']);
         $this->building->setName($input['name']);
         $this->building->setOwner($input['owner']);
 
         $building = $this->building->createNewBuildingAndReturn();
-        $this->projectService->initProject($building->buildingId);
+        $this->projectService->initialProject($building->buildingId);
     }
 
     public function updateBuilding($id, array $input) {
@@ -58,6 +51,7 @@ class BuildingService implements IBuildingService {
     }
 
     public function deleteBuilding($id) {
+        $this->projectService->deleteProjectByBuildingId($id);
         $this->building->setBuildingId($id);
         return $this->building->delete();
     }

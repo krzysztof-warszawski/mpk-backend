@@ -7,10 +7,14 @@ namespace model\service;
 interface IBuildingService {
 
     public function getAllBuildingsList();
+
     public function getOfferBuildingsList();
-    public function getBuildingById($id);
-    public function getBuildingByName($name);
+
+    public function getBuildingById(int $id);
+
     public function createBuildingAndInitProject(array $input);
-    public function updateBuilding($id, array $input);
-    public function deleteBuilding($id);
+
+    public function updateBuilding(int $id, array $input);
+
+    public function deleteBuilding(int $id);
 }
