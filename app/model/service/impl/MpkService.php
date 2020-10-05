@@ -8,9 +8,13 @@ use model\service\IMpkService;
 
 class MpkService implements IMpkService {
 
-
     public function createMpk(int $buildingId) {
-        // TODO: Implement createMpk() method.
+        $mpk = strval($buildingId);
+        if (strlen($mpk) < 3) {
+            $mpk = '0'. $mpk;
+        }
+        $mpk .= '0000';
+        return $mpk;
     }
 
     public function updateMpk(string $mpk) {

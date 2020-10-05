@@ -17,4 +17,6 @@ interface IProjectService {
     public function updateProject($id, array $input);
 
     public function deleteProject($id);
+
+    public function initProject(int $buildingId);
 }

@@ -82,8 +82,7 @@ class BuildingController extends CRUDController {
         if (!$this->validateInput($input)) {
             return $this->unprocessableEntityResponse();
         }
-        $building = $this->service->createBuildingAndReturn($input);
-        // TODO -> continue with MPK Service
+        $this->service->createBuildingAndInitProject($input);
         $response['status_code_header'] = 'HTTP/1.1 201 Created';
         $response['body'] = null;
         return $response;

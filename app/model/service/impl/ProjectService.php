@@ -9,6 +9,7 @@ use model\service\IProjectService;
 class ProjectService implements IProjectService {
 
     private Project $project;
+    private MpkService $mpkService;
 
 
     public function __construct() {
@@ -60,5 +61,18 @@ class ProjectService implements IProjectService {
     public function deleteProject($id) {
         $this->project->setId($id);
         return $this->project->delete();
+    }
+
+    public function initProject(int $buildingId) {
+        $mpk = $this->mpkService->createMpk($buildingId);
+        $input = array(
+            "date" => new \DateTime(),
+            "mpk" => $mpk,
+            "projectNum" => 0,
+            "shortDescription" => "OFERTOWANIE I MARKETING",
+            "buildingId" => $buildingId,
+            "serviceTypeId" => 0
+        );
+        $this->createProject($input);
     }
 }

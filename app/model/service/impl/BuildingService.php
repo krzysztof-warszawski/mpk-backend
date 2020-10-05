@@ -10,6 +10,7 @@ use model\service\IBuildingService;
 class BuildingService implements IBuildingService {
 
     private Building $building;
+    private ProjectService $projectService;
 
 
     public function __construct() {
@@ -38,12 +39,13 @@ class BuildingService implements IBuildingService {
         // TODO: Implement getBuildingByName() method.
     }
 
-    public function createBuildingAndReturn(array $input) {
+    public function createBuildingAndInitProject(array $input) {
         $this->building->setAddress($input['address']);
         $this->building->setName($input['name']);
         $this->building->setOwner($input['owner']);
 
-        return $this->building->createNewBuildingAndReturn();
+        $building = $this->building->createNewBuildingAndReturn();
+        $this->projectService->initProject($building->buildingId);
     }
 
     public function updateBuilding($id, array $input) {

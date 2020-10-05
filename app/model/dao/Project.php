@@ -168,24 +168,35 @@ class Project implements IProject {
 
     public function getProjectById() {
         $this->db->query('SELECT * FROM project
-                                WHERE id = :id');
+                                    WHERE id = :id');
 
         $this->db->bind(':id', $this->id);
         return $this->db->single();
     }
 
     public function getProjectsByBuildingId() {
-        $this->db->query('SELECT project.date, project.floor, project.mpk, 
+        $this->db->query('SELECT project.id, project.date, project.floor, project.mpk, 
                                     project.project_num, project.short_description, 
                                     project.tenant, service_type.name as service
                                  FROM project
                                     JOIN service_type
                                     ON project.service_type_id = service_type.id
                                  WHERE building_id = :id
-                                    ORDER BY project.mpk');
+                                    ORDER BY project.id');
 
         $this->db->bind(':id', $this->buildingId);
         return $this->db->resultSet();
+    }
+
+    public function getTopProjectForBuildingId() {
+        $this->db->query('SELECT project_num
+                                    FROM project
+                                 WHERE building_id = :id
+                                    ORDER BY project.id DESC
+                                 LIMIT 1;');
+
+        $this->db->bind(':id', $this->buildingId);
+        return $this->db->single();
     }
 
     public function create() {
@@ -234,7 +245,7 @@ class Project implements IProject {
 
     public function delete() {
         $this->db->query('DELETE FROM project 
-                                 WHERE id = :id');
+                                    WHERE id = :id');
 
         $this->db->bind(':id', $this->id);
 
