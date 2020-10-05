@@ -76,13 +76,17 @@ class Database {
     // Get single record as object
     public function single() {
         $this->execute();
-        return $this->stmt->fetch(PDO::FETCH_OBJ);
+        $obj = $this->stmt->fetch(PDO::FETCH_OBJ);
+        $this->stmt->closeCursor();
+        return $obj;
     }
 
     // Get record row count
     public function rowCount() {
         $this->stmt->execute();
-        return $this->stmt->rowCount();
+        $rowCount = $this->stmt->rowCount();
+        $this->stmt->closeCursor();
+        return $rowCount;
     }
 
     // Returns the last inserted ID

@@ -38,7 +38,7 @@ class BuildingService implements IBuildingService {
         $this->building->setOwner($input['owner']);
 
         $building = $this->building->createNewBuildingAndReturn();
-        $this->projectService->initialProject($building->buildingId);
+        $this->projectService->initialProject($building->building_id);
     }
 
     public function updateBuilding($id, array $input) {
