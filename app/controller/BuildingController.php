@@ -51,6 +51,7 @@ class BuildingController extends CRUDController {
                 break;
         }
         header($response['status_code_header']);
+        header("Content-Type: application/json; charset=UTF-8");
         if ($response['body']) {
             echo $response['body'];
         }
