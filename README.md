@@ -9,6 +9,7 @@
 - MySQL
 - MySQLWorkbench
 - PhpStorm
-#### Tests
+#### Testing
 - PhpUnit 9.4
 - Postman
+- Xdebug
