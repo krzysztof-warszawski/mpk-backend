@@ -5,16 +5,20 @@ require 'app/config/init.php';
 use controller\BuildingController;
 use controller\ProjectController;
 
-header('Access-Control-Allow-Origin: *');
-header("Access-Control-Allow-Methods: OPTIONS,GET,POST,PUT,DELETE");
-header("Access-Control-Max-Age: 600");
-header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-
-$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$uri = explode( '/', $uri );
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: OPTIONS, GET, POST, PUT, DELETE");
+header("Access-Control-Max-Age: -600");
+header("Access-Control-Allow-Headers: Access-Control-Allow-Origin, Content-Type, Access-Control-Allow-Headers, X-Requested-With, Access-Control-Allow-Methods");
 
 $requestMethod = $_SERVER["REQUEST_METHOD"];
 
+if ($requestMethod == 'OPTIONS') {
+    header("HTTP/1.1 204 No Content");
+    exit;
+}
+
+$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$uri = explode( '/', $uri );
 
 // read the URI
 if (isset($uri[5]) && $uri[5] === 'projects') {
