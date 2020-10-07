@@ -161,7 +161,8 @@ class Project implements IProject {
                                     ON project.building_id = building.building_id
                                     JOIN service_type
                                     ON project.service_type_id = service_type.id
-                                 ORDER BY building_name');
+                                 ORDER BY building_name,
+                                          mpk');
 
         return $this->db->resultSet();
     }
