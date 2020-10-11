@@ -12,7 +12,7 @@ class ProjectServiceTest extends TestCase {
     /**
      * @beforeClass
      */
-    public static function setUpSomeProjectService()
+    public static function setUpProjectService()
     {
         self::$projectService = new ProjectService();
     }

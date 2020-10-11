@@ -4,10 +4,11 @@ require 'app/config/init.php';
 
 use controller\BuildingController;
 use controller\ProjectController;
+use controller\ServiceTypeController;
 
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: OPTIONS, GET, POST, PUT, DELETE");
-header("Access-Control-Max-Age: -600");
+header("Access-Control-Max-Age: 600");
 header("Access-Control-Allow-Headers: Access-Control-Allow-Origin, Content-Type, Access-Control-Allow-Headers, X-Requested-With, Access-Control-Allow-Methods");
 
 $requestMethod = $_SERVER["REQUEST_METHOD"];
@@ -40,8 +41,9 @@ switch ($uri[3]) {
         $buildingController = new BuildingController($requestMethod, $id, $isOfferBuildings);
         $buildingController->processRequest();
         break;
-    case 'mpk':
-        // todo
+    case 'service':
+        $serviceTypeController = new ServiceTypeController($requestMethod);
+        $serviceTypeController->processRequest();
         break;
     default:
         header("HTTP/1.1 404 Not Found");

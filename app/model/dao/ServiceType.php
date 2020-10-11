@@ -48,7 +48,7 @@ class ServiceType {
     }
 
 
-    public function getAllServiceTypes() {
+    public function getAll() {
         $this->db->query('SELECT * FROM service_type 
                                 ORDER BY id');
 
