@@ -30,13 +30,15 @@ class DirCreatorService {
             return $this->dirCreator->createOfferDir();
 
         } elseif ($this->project->service_type_id == 5) {
-            $this->dirCreator->createDir();
-            $this->setUpForGuaranteeDir();
-            return $this->dirCreator->createDir();
-
+            if ($this->dirCreator->createDir()) {
+                $this->setUpForGuaranteeDir();
+                return $this->dirCreator->createDir();
+            }
+            return false;
         } else {
             return $this->dirCreator->createDir();
         }
+
     }
 
     private function setUpForGuaranteeDir() {
